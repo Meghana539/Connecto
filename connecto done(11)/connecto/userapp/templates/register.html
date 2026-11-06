@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecto | Create Account</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, #a8c6c9 0%, #9f98a9 40%, #9f98a9 80%, #b8a9a3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-box {
+            width: 1000px;
+            display: flex;
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .left {
+            width: 45%;
+            padding: 60px 40px;
+            color: white;
+            background: rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left h2 { font-weight: 800; font-size: 32px; margin-bottom: 25px; }
+        .left p { font-size: 16px; opacity: 0.9; }
+        .left ul { margin-top: 30px; padding: 0; list-style: none; }
+        .left ul li { margin-bottom: 15px; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+        .left ul li::before {
+            content: "✓"; background: #6366f1; width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-size: 12px; font-weight: bold;
+        }
+
+        .right { width: 55%; padding: 50px; background: rgba(255, 255, 255, 0.9); }
+        .title { text-align: center; margin-bottom: 30px; font-weight: 800; color: #1e293b; font-size: 28px; }
+
+        .form-label { font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 5px; margin-left: 5px; }
+        .form-control {
+            margin-bottom: 5px; border-radius: 15px; border: 1px solid #e2e8f0;
+            padding: 12px 18px; background: #f8fafc; font-size: 14px;
+        }
+
+        .error-msg { color: #e11d48; font-size: 11px; font-weight: 600; margin-bottom: 10px; margin-left: 10px; display: block; }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none; border-radius: 15px; padding: 15px; width: 100%;
+            color: white; font-weight: 700; font-size: 16px; margin-top: 20px;
+        }
+
+        .link-text { text-align: center; margin-top: 25px; font-size: 14px; color: #64748b; }
+        .link-text a { color: #6366f1; text-decoration: none; font-weight: 700; }
+
+        .alert-custom {
+            font-size: 13px; font-weight: 600; border-radius: 12px; border: none;
+        }
+
+        @media (max-width: 992px) { .left { display: none; } .main-box { width: 100%; } .right { width: 100%; } }
+    </style>
+</head>
+
+<body>
+
+<div class="main-box">
+    <div class="left">
+        <h2>Join Connecto ✨</h2>
+        <p>A premium marketplace for professionals and customers.</p>
+        <ul>
+            <li>Find top-rated experts</li>
+            <li>Easy booking & payments</li>
+            <li>Grow your business</li>
+            <li>Real-time notifications</li>
+        </ul>
+    </div>
+
+    <div class="right">
+        <h3 class="title">Get Started</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-custom p-2 mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" novalidate id="regForm">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="first_name" class="form-control" value="{{ form.first_name.value|default:'' }}">
+                    {% if form.first_name.errors %}<span class="error-msg">{{ form.first_name.errors.0 }}</span>{% endif %}
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" value="{{ form.last_name.value|default:'' }}">
+                    {% if form.last_name.errors %}<span class="error-msg">{{ form.last_name.errors.0 }}</span>{% endif %}
+                </div>
+            </div>
+
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" value="{{ form.username.value|default:'' }}">
+            {% if form.username.errors %}<span class="error-msg">{{ form.username.errors.0 }}</span>{% endif %}
+
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}">
+            {% if form.email.errors %}<span class="error-msg">{{ form.email.errors.0 }}</span>{% endif %}
+
+            <label class="form-label">Mobile Number</label>
+            <input type="text"
+                   name="phone"
+                   id="id_phone"
+                   class="form-control"
+                   maxlength="10"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);"
+                   value="{{ form.phone.value|default:'' }}">
+            {% if form.phone.errors %}
+                <span class="error-msg">⚠️ {{ form.phone.errors.0 }}</span>
+
+            {% endif %}
+            <div class="row mt-2">
+                <div class="col-6">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password1" class="form-control">
+                    {% if form.password1.errors %}<span class="error-msg">{{ form.password1.errors.0 }}</span>{% endif %}
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Confirm</label>
+                    <input type="password" name="password2" class="form-control">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-custom">Create Account</button>
+        </form>
+
+        <div class="link-text">
+            Already have an account? <a href="/login/">Login here</a>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('id_phone').addEventListener('paste', function(e) {
+        let pasteData = (e.clipboardData || window.clipboardData).getData('text');
+        if (pasteData.length > 10 || isNaN(pasteData)) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>

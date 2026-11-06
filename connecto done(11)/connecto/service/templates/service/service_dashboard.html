@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provider Dashboard | Connecto</title>
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    /* ===== RESET & BODY ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f4f6fb; color: #333; }
+
+    /* ===== HEADER ===== */
+    .header {
+        background: linear-gradient(90deg, #6c63ff, #8a82f7);
+        color: #fff; padding: 15px 30px;
+        display: flex; justify-content: space-between; align-items: center;
+        position: sticky; top: 0; z-index: 1000;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .header-right { display: flex; align-items: center; gap: 20px; font-weight: 500; position: relative; }
+
+    /* ===== NOTIFICATION SYSTEM ===== */
+    .notif-dropdown { position: relative; cursor: pointer; }
+    .notif-badge {
+        background: #ff4757; color: white; font-size: 11px;
+        padding: 2px 6px; border-radius: 50%;
+        position: absolute; top: -5px; right: -5px;
+        border: 2px solid #6c63ff;
+    }
+    .dropdown-content {
+        display: none; position: absolute; right: 0; top: 45px;
+        background-color: #2c2f48; min-width: 300px; max-height: 400px;
+        box-shadow: 0px 10px 25px rgba(0,0,0,0.2); z-index: 2000;
+        border-radius: 12px; overflow-y: auto; padding: 0;
+    }
+    .dropdown-content li {
+        color: #eee; padding: 15px; border-bottom: 1px solid #3d415e;
+        font-size: 13px; list-style: none; transition: 0.2s;
+    }
+    .dropdown-content li:hover { background-color: #383c5a; }
+
+    /* ===== LAYOUT ===== */
+    .container-fluid { display: flex; min-height: calc(100vh - 70px); }
+    .sidebar { width: 240px; background: #fff; padding: 25px 15px; box-shadow: 2px 0 10px rgba(0,0,0,0.03); flex-shrink: 0; }
+    .sidebar a {
+        display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+        margin-bottom: 8px; text-decoration: none; color: #555;
+        border-radius: 10px; font-weight: 500; transition: 0.3s;
+    }
+    .sidebar a:hover, .sidebar a.active { background: #6c63ff; color: white; }
+
+    .main { flex: 1; padding: 30px; display: flex; flex-direction: column; gap: 25px; }
+
+    /* ===== CARDS & STATS ===== */
+    .card { background: #fff; padding: 25px; border-radius: 20px; display: flex; gap: 20px; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #6c63ff; }
+
+    .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+    .booking-card { background: #fff; padding: 20px; border-radius: 18px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-left: 5px solid #6c63ff; position: relative; transition: 0.3s; }
+    .status-tag, .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+    .btn { padding: 8px 16px; border-radius: 8px; text-decoration: none; color: white; font-weight: 600; font-size: 13px; display: inline-block; transition: 0.2s; border: none; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    /* ⭐ STARS UI */
+    .review-box { background: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid #ffeeba; margin-top: 12px; }
+    .star-filled { color: #ffb800; font-size: 18px; }
+    .star-empty { color: #cbd5e0; font-size: 18px; }
+    .comment-text { display: block; color: #4a5568; font-size: 13px; margin-top: 6px; font-style: italic; font-weight: 500; }
+
+    .recommended-badge { background: #ffd700; color: #856404; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; }
+
+    @media (max-width: 768px) { .container-fluid { flex-direction: column; } .sidebar { width: 100%; display: flex; flex-wrap: wrap; justify-content: center; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h2 style="letter-spacing: 1px;">Connecto</h2>
+    <div class="header-right">
+        <div class="notif-dropdown" id="notifBell">
+            <i class="bx bxs-bell" style="font-size: 24px;"></i>
+            {% if unread_count > 0 %}
+                <span id="notifBadge" class="notif-badge">{{ unread_count }}</span>
+            {% endif %}
+            <ul id="notifMenu" class="dropdown-content">
+                {% for n in notifications %}
+                    <li>{{ n.message }}</li>
+                {% empty %}
+                    <li style="text-align: center; color: #888; padding: 20px;">No new alerts</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="font-size: 14px;">Hi, {{ provider.user.first_name }}!</div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <a href="#" class="active"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        <a href="{% url 'service:edit_service_provider' %}" class="edit-btn"><i class='bx bxs-user'></i> Edit Profile</a>
+        <a href="{% url 'service:provider_all_bookings' %}"><i class='bx bxs-calendar-check'></i> Bookings</a>
+        <a href="{% url 'userapp:logout' %}" style="color: #ff4757;"><i class='bx bxs-log-out'></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="stats-container">
+            <div class="card" style="background: linear-gradient(135deg, #11998e, #38ef7d); color: white; border: none; padding: 20px; position: relative; overflow: hidden; display: block;">
+                <div style="position: relative; z-index: 2;">
+                    <p style="font-size: 13px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Earnings</p>
+                    <h2 style="font-size: 32px; font-weight: 700; margin: 0;">₹{{ total_earnings }}</h2>
+                </div>
+                <i class='bx bx-wallet' style="position: absolute; right: -10px; bottom: -10px; font-size: 90px; opacity: 0.2; color: white;"></i>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, #6c63ff, #8a82f7); color: white; border: none; padding: 20px; position: relative; overflow: hidden; display: block;">
+                <div style="position: relative; z-index: 2;">
+                    <p style="font-size: 13px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Bookings</p>
+                    <h2 style="font-size: 32px; font-weight: 700; margin: 0;">{{ total_bookings_count }}</h2>
+                </div>
+                <i class='bx bx-calendar-check' style="position: absolute; right: -10px; bottom: -10px; font-size: 90px; opacity: 0.2; color: white;"></i>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ provider.profile_photo.url }}" alt="Profile">
+            <div>
+                <h3 style="margin-bottom: 5px;">{{ provider.user.get_full_name }}</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">{{ provider.service }} | {{ provider.city }}</p>
+                {% if provider.is_recommended %}
+                    <span class="recommended-badge">⭐ Recommended Provider</span>
+                {% else %}
+                    <a href="{% url 'service:get_recommended' %}" class="btn" style="background: #6c63ff;">Get Recommended ₹500</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bookings-section">
+            <h3 style="margin-bottom: 20px; font-size: 20px;">
+                {% if show_latest_completed %}
+                    📌 Last Completed Work
+                {% else %}
+                    📌 Active Service Requests
+                {% endif %}
+            </h3>
+
+            {% if bookings %}
+                {% for booking in bookings %}
+                <div class="booking-card" style="{% if show_latest_completed %}border-left: 5px solid #ffb800; background: #fffcf0;{% endif %}">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h5 style="margin-bottom: 8px;">{{ booking.name }}</h5>
+                            <p style="font-size: 13px; color: #666;"><b>Phone:</b> {{ booking.phone }}</p>
+                            <p style="font-size: 13px; color: #666;"><b>Slot:</b> {{ booking.date }} | {{ booking.slot }}</p>
+                            <p style="font-size: 13px; color: #666;"><b>Address:</b> {{ booking.address }} </p>
+                             <p style="font-size: 13px; color: #666;"><b>Message:</b> {{ booking.notes }} </p>
+
+                            <div style="margin-top: 10px;">
+                                {% if booking.status == 'pending' %}
+                                    <span class="status-tag" style="background: #fff3e0; color: #ef6c00;">Pending ⏳</span>
+                                {% elif booking.status == 'accepted' %}
+                                    <span class="status-badge" style="background: #e8f5e9; color: #2e7d32;">Accepted ✅</span>
+                                {% elif booking.status == 'paid' %}
+                                    <span class="status-badge" style="background: #e3f2fd; color: #1565c0;">Paid 💰</span>
+                                {% elif booking.status == 'completed' %}
+                                    <span class="status-badge" style="background: #f3e5f5; color: #7b1fa2;">Job Finished 🏆</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            {% if booking.status == 'pending' %}
+                                <a href="{% url 'service:accept_booking' booking.id %}" class="btn" style="background: #2ecc71;">Accept</a>
+                                <a href="{% url 'service:reject_booking' booking.id %}" class="btn" style="background: #ff4757;">Reject</a>
+                            {% elif booking.status == 'accepted' %}
+                                <a href="https://wa.me/91{{ booking.phone }}?text=Hello%20{{ booking.name }}!" target="_blank" class="btn" style="background: #25d366;"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+
+                            {% elif booking.status == 'completed' %}
+                                <span style="color: #2e7d32; font-weight: 600; font-size: 12px;"><i class='bx bx-check-double'></i> Archived</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if booking.status == 'completed' %}
+                        {% if booking.review %}
+                            <div class="review-box shadow-sm">
+                                <div class="stars">
+                                    {% for i in "12345"|make_list %}
+                                        <i class='bx bxs-star {% if forloop.counter <= booking.review.rating %}star-filled{% else %}star-empty{% endif %}'></i>
+                                    {% endfor %}
+                                    <span style="font-weight: 600; font-size: 14px; margin-left: 8px; color: #4a5568;">{{ booking.review.rating }}/5</span>
+                                </div>
+                                {% if booking.review.comment %}
+                                    <small class="comment-text">"{{ booking.review.comment }}"</small>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <p style="color: #a0aec0; font-size: 11px; margin-top: 12px;">
+                                <i class='bx bx-time'></i> Feedback not yet provided by client
+                            </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card" style="justify-content: center; color: #a0aec0; border: 2px dashed #e2e8f0; background: transparent; box-shadow: none;">
+                    <p>No activity to show. Ready for new requests!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const bell = document.getElementById("notifBell");
+    const menu = document.getElementById("notifMenu");
+
+    if (bell) {
+        bell.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const badge = document.getElementById("notifBadge");
+
+            if (menu.style.display === "none" || menu.style.display === "") {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+
+            if (badge) {
+                fetch("{% url 'service:mark_notifications_as_read' %}")
+                .then(response => response.json())
+                .then(data => { badge.remove(); })
+                .catch(err => console.error("Error:", err));
+            }
+        });
+    }
+
+    window.addEventListener("click", function() {
+        if (menu) menu.style.display = "none";
+    });
+});
+</script>
+</body>
+</html>

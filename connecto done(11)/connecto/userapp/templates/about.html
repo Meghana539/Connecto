@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us | Connecto{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* -----------------------------------------------------------
+       1. GLOBAL SETTINGS & RESET (About Page specific)
+       ----------------------------------------------------------- */
+    :root {
+        --primary-indigo: #4f46e5;
+        --text-dark: #0f172a;
+        --text-muted: #64748b;
+        --bg-white: #ffffff;
+        --bg-light: #f8fafc;
+    }
+
+    /* Page container settings for centering and spacing */
+    .about-page-content {
+        font-family: 'Jakarta', sans-serif;
+        background-color: var(--bg-light);
+        padding: 100px 20px;
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* -----------------------------------------------------------
+       2. MODERN DESIGN CONTAINER
+       ----------------------------------------------------------- */
+    .about-wrapper {
+        width: 1100px;
+        display: flex;
+        gap: 60px;
+        align-items: center;
+    }
+
+    /* LEFT SIDE: Clean Typography Section */
+    .about-left-text {
+        flex: 1.2;
+    }
+
+    /* "BACK" button styled within the page flow */
+    .back-btn-wrapper { margin-bottom: 25px; }
+    .back-btn {
+        text-decoration: none;
+        color: var(--primary-indigo);
+        font-weight: 700;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+    .back-btn:hover { opacity: 0.8; }
+
+    /* Main Title */
+    .about-title {
+        font-size: 56px;
+        font-weight: 800;
+        letter-spacing: -2.5px;
+        color: var(--text-dark);
+        margin-bottom: 30px;
+        line-height: 1.1;
+    }
+
+    /* Main Paragraphs */
+    .about-p-text {
+        font-size: 18px;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 40px;
+        font-weight: 500;
+    }
+
+    /* Modern List (Horizontal style) */
+    .why-choose-us-horizontal {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 30px;
+    }
+    .Horizontal-item {
+        font-size: 14px;
+        color: var(--primary-indigo);
+        background-color: #eef2ff;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+    }
+
+    /* -----------------------------------------------------------
+       3. RIGHT SIDE: ELEGANT GRID SECTION
+       ----------------------------------------------------------- */
+    .about-right-grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    /* Grid Box Item Styling */
+    .grid-box-item {
+        background: var(--bg-white);
+        padding: 30px;
+        border-radius: 28px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        border: 1px solid #f1f5f9;
+        transition: transform 0.3s ease;
+    }
+    .grid-box-item:hover {
+        transform: translateY(-8px);
+    }
+
+    /* Box Icon Circle */
+    .box-icon-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #eef2ff;
+        color: var(--primary-indigo);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        margin-bottom: 18px;
+    }
+
+    /* Box Titles & Text */
+    .box-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+    .box-p-text {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .about-wrapper { flex-direction: column; gap: 50px; width: 100%; }
+        .about-title { font-size: 42px; text-align: center; }
+        .about-p-text { text-align: center; }
+        .why-choose-us-horizontal { justify-content: center; flex-wrap: wrap; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-page-content">
+    <div class="about-wrapper">
+
+        <div class="about-left-text">
+            <div class="back-btn-wrapper">
+            </div>
+            <h1 class="about-title">Revolutionizing how you book local services.</h1>
+            <p class="about-p-text">
+                Connecto is a smart service platform that connects users with trusted local service providers. It helps users easily find, book, and manage services anytime and anywhere.
+            </p>
+            <ul class="why-choose-us-horizontal">
+                <li class="Horizontal-item">✔ Trusted Providers</li>
+                <li class="Horizontal-item">✔ Fast Service</li>
+                <li class="Horizontal-item">✔ User-Friendly</li>
+            </ul>
+        </div>
+
+        <div class="about-right-grid">
+            <div class="grid-box-item">
+                <div class="box-icon-circle">🎯</div>
+                <h3 class="box-title">Our Mission</h3>
+                <p class="box-p-text">To simplify finding and booking services by providing a fast, reliable, and user-friendly platform.</p>
+            </div>
+            <div class="grid-box-item">
+                <div class="box-icon-circle">💡</div>
+                <h3 class="box-title">Our Vision</h3>
+                <p class="box-p-text">To become one of the most trusted and widely used service platforms, making everyday tasks easier.</p>
+            </div>
+            <div class="grid-box-item" style="grid-column: span 2;">
+                <div class="box-icon-circle">💎</div>
+                <h3 class="box-title">Our Promise</h3>
+                <p class="box-p-text">We promise transparency, quality, and security in every booking. Our interface makes sure you have the smoothest experience finding the best local talent for your needs.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

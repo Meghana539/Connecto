@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings | Connecto{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(to bottom, #a8c6c9 0%, #9f98a9 40%, #9f98a9 80%, #b8a9a3 100%) !important;
+        min-height: 100vh;
+    }
+
+    /* Spacing Kam Ki Gayi Hai */
+    .container.py-4 {
+        padding-top: 1.5rem !important; /* Nav aur content ke beech ka gap kam kiya */
+    }
+
+    .table-container {
+        background: #ffffff;
+        padding: 15px 20px; /* Internal padding kam ki */
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-top: 10px; /* Title aur table ke beech ka gap kam kiya */
+    }
+
+    .table thead th {
+        background-color: #6366f1 !important;
+        color: white !important;
+        border: none;
+        padding: 12px 15px; /* Thinner header */
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .table thead th:first-child { border-radius: 12px 0 0 12px; }
+    .table thead th:last-child { border-radius: 0 12px 12px 0; }
+
+    .service-highlight { color: #4f46e5; font-weight: 700; font-size: 13px; }
+    .badge-charges {
+        background-color: #f3f4f6;
+        color: #1f2937;
+        border: 1px solid #e5e7eb;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 11px;
+    }
+
+    .back-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+
+    .page-title {
+        color: white;
+        font-weight: 800;
+        margin-top: 2px;
+        font-size: 24px; /* Title size thoda chota kiya */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4"> <div class="d-flex justify-content-between align-items-center mb-2"> <div>
+            <a href="{% url 'userapp:user_dashboard' %}" class="back-link">
+                <i class='bx bx-left-arrow-alt'></i> Back
+            </a>
+            <h2 class="page-title">My Bookings</h2>
+        </div>
+    </div>
+
+    <div class="table-responsive table-container">
+        <table class="table align-middle table-hover mb-0"> <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Provider</th>
+                    <th>Date</th>
+                    <th>Charges</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for b in bookings %}
+                <tr style="border-bottom: 1px solid #f8f9fa;">
+                    <td class="py-2"> <span class="service-highlight">{{ b.service|upper }}</span>
+                    </td>
+                    <td class="fw-bold text-dark" style="font-size: 14px;">
+                        {{ b.provider.user.get_full_name|default:b.provider.user.username }}
+                    </td>
+                    <td class="text-muted" style="font-size: 13px;">
+                        {{ b.date|date:"d M Y" }}
+                    </td>
+                    <td>
+                        <span class="badge-charges">₹{{ b.amount_paid }}</span>
+                    </td>
+                    <td>
+                        {% if b.status == 'accepted' %}
+                            <span class="badge status-badge bg-warning text-dark">Awaiting Payment</span>
+                        {% elif b.status == 'confirmed' %}
+                            <span class="badge status-badge bg-success">Confirmed & Paid</span>
+                        {% elif b.status == 'completed' %}
+                            <span class="badge status-badge bg-primary">Completed</span>
+                         {% elif b.status == 'paid' %}
+        <span class="badge status-badge bg-info">
+            Paid
+        </span>
+
+        <!-- ✅ ADD BUTTON HERE -->
+        <div class="mt-2">
+            <a href="{% url 'userapp:mark_work_done' b.id %}"
+               class="btn btn-sm text-white"
+               style="background:#6c63ff;">
+                Mark Done ✅
+            </a>
+        </div>
+                        {% else %}
+                            <span class="badge status-badge bg-secondary text-white">{{ b.status|title }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-5">
+                        <i class='bx bx-calendar-x' style="font-size: 40px; color: #ccc;"></i>
+                        <p class="mt-2 text-muted fw-bold">No bookings found.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

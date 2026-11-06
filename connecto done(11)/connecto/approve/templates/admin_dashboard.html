@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecto | Premium Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #6a0dad;
+            --bg-body: #f8f9fd;
+            --text-dark: #1a1d21;
+            --text-muted: #8898aa;
+            --success: #17c671;
+            --warning: #f7b924;
+            --danger: #eb4d4b;
+            --info: #00bcd4;
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: var(--text-dark); }
+        .container { max-width: 1350px; }
+
+        .header-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 35px 0;
+        }
+
+        h2 { font-weight: 800; color: var(--primary); margin: 0; letter-spacing: -1px; }
+
+        /* Logout & Notification positioning */
+        .top-actions {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .logout-btn {
+            background:#ff4757;
+            color:white;
+            padding:8px 16px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:600;
+            box-shadow:0 2px 8px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
+        .logout-btn:hover { background: #e04040; color: white; }
+
+        /* Notification Bell */
+        .notification-wrapper {
+            position: relative;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .bell-icon { font-size: 20px; color: var(--primary); }
+
+        .bell-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff0000;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+
+        /* STATS CARDS */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 35px; }
+        .stat-card {
+            background: white; padding: 25px; border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            transition: all 0.3s ease; text-decoration: none; color: inherit;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-card p { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; }
+        .stat-card h3 { font-size: 28px; font-weight: 800; margin: 0; }
+
+        .sc-revenue { border-bottom: 4px solid var(--success); }
+        .sc-profit { border-bottom: 4px solid #3498db; }
+        .sc-pending { border-bottom: 4px solid var(--warning); }
+        .sc-approved { border-bottom: 4px solid #9b59b6; }
+
+        /* SEARCH BAR */
+        .search-container {
+            background: white; padding: 12px 25px; border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 25px;
+            display: flex; align-items: center; gap: 15px; border: 1px solid #eee;
+        }
+        .search-input { border: none; outline: none; width: 100%; font-weight: 500; background: transparent;}
+
+        /* TABS */
+        .nav-pills { background: #eee; padding: 4px; border-radius: 12px; display: inline-flex; margin-bottom: 25px; }
+        .nav-link { border-radius: 9px !important; color: #555; font-weight: 600; font-size: 13px; padding: 8px 20px; }
+        .nav-link.active { background: var(--primary) !important; color: white !important; }
+
+        /* TABLE */
+        .data-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.02); overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th { font-size: 10px; color: var(--text-muted); text-transform: uppercase; padding: 15px; font-weight: 800; border-bottom: 1px solid #f2f2f2; text-align: center; }
+        td { padding: 16px 15px; text-align: center; border-bottom: 1px solid #f8f9fd; font-size: 13px; }
+
+        .profile-img { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; }
+        .order-badge { background: #2d3436; color: white; padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 11px;}
+        .money-badge { font-weight: 700; padding: 5px 10px; border-radius: 8px; font-size: 12px; }
+        .worker-m { color: var(--success); background: #e8f5e9; }
+        .admin-m { color: #2980b9; background: #e3f2fd; }
+
+        .btn-action { padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.2s; border: none; }
+        .btn-approve { background: var(--primary); color: white; margin-right: 5px; }
+        .btn-suspend { color: var(--danger); background: #fff5f5; border: 1px solid #ffebeb; }
+
+        /* COMPLAINTS SECTION */
+        #complaint { margin-top: 50px; padding-top: 30px; border-top: 2px solid #eee; }
+        .complaint-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .complaint-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--danger); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .complaint-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+        .complaint-card .email { font-size: 12px; color: var(--primary); margin-bottom: 10px; }
+        .complaint-card p { font-size: 13px; color: #555; line-height: 1.5; }
+
+        .dot-indicator { height: 6px; width: 6px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: middle;}
+    </style>
+</head>
+<body>
+
+<div class="top-actions">
+    <div class="notification-wrapper" onclick="handleBellClick()">
+        <i class="fas fa-bell bell-icon"></i>
+        <span class="bell-badge" id="bell-count">{{ contacts.count }}</span>
+    </div>
+    <a href="{% url 'userapp:logout' %}" class="logout-btn">
+        <i class='bx bxs-log-out'></i> Logout
+    </a>
+</div>
+
+<div class="container pb-5">
+    <div class="header-section">
+        <h2>Connecto Management</h2>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card sc-revenue"><p>Total Revenue</p><h3>₹{{ total_revenue|default:0 }}</h3></div>
+        <div class="stat-card sc-profit"><p>Admin Profit</p><h3>₹{{ total_admin_profit|default:0 }}</h3></div>
+        <div class="stat-card sc-pending"><p>Pending Requests</p><h3>{{ pending|default:0 }}</h3></div>
+        <div class="stat-card sc-approved"><p>Active Partners</p><h3>{{ approved|default:0 }}</h3></div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#providersTab">Service Providers</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#usersTab">App Users</button></li>
+        </ul>
+    </div>
+
+    <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="masterSearch" class="search-input" placeholder="Search by name, city, role, or email...">
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="providersTab">
+            <div class="data-card">
+                <table class="searchableTable">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Provider Details</th>
+                            <th>Documents</th>
+                            <th>Total Booking</th>
+                            <th>Provider Earning</th>
+                            <th>Connecto Earning</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in providers %}
+                        <tr>
+                            <td>
+                                {% if p.profile_photo %}<img src="{{ p.profile_photo.url }}" class="profile-img">
+                                {% else %}<div class="profile-img bg-light d-inline-flex align-items-center justify-content-center">👤</div>{% endif %}
+                            </td>
+                            <td class="text-start">
+                                <div class="fw-bold">{{ p.user.first_name }} {{ p.user.last_name }}</div>
+                                <div class="small text-muted">{{ p.service }} | {{ p.city }}</div>
+                            </td>
+                            <td>
+                                {% if p.id_proof %}<a href="{{ p.id_proof.url }}" target="_blank" class="text-decoration-none small fw-bold">ID</a>{% endif %}
+                                |
+                                {% if p.service_id_proof %}<a href="{{ p.service_id_proof.url }}" target="_blank" class="text-decoration-none small fw-bold">WORK</a>{% endif %}
+                            </td>
+                            <td><span class="order-badge">{{ p.total_orders|default:0 }}</span></td>
+                            <td><span class="money-badge worker-m">₹{{ p.p_total|default:0 }}</span></td>
+                            <td><span class="money-badge admin-m">₹{{ p.c_total|default:0 }}</span></td>
+                            <td>
+                                {% if p.user.is_suspended %}
+                                    <span class="badge rounded-pill bg-danger-subtle text-danger"><span class="dot-indicator bg-danger"></span>Suspended</span>
+                                {% elif p.status == 'approved' %}
+                                    <span class="badge rounded-pill bg-success-subtle text-success"><span class="dot-indicator bg-success"></span>Active</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-warning-subtle text-warning"><span class="dot-indicator bg-warning"></span>Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if p.user.is_suspended %}
+                                    <a href="{% url 'approve:unsuspend_user' p.user.id %}" class="btn-action btn-approve">
+                                  Unsuspend
+                                     </a>
+                                <span class="text-danger small fw-bold">BLOCKED 🚫</span>
+                                {% elif p.status == 'pending' %}
+                                    <a href="{% url 'approve:approve_provider' p.id %}" class="btn-action btn-approve">Approve</a>
+                                    <a href="{% url 'approve:reject_provider' p.id %}" class="btn-action btn-suspend">Reject</a>
+                                {% elif p.status == 'approved' %}
+                                    <a href="{% url 'approve:suspend_user' p.user.id %}" class="btn-action btn-suspend">Suspend</a>
+                                {% elif p.status == 'rejected' %}
+                                    <span class="text-danger fw-bold">Rejected ❌</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="usersTab">
+            <div class="data-card">
+                <table class="searchableTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td class="text-muted">#{{ u.id }}</td>
+                            <td class="fw-bold">{{ u.get_full_name|default:u.username }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>
+                                <span class="badge {% if u.role == 'provider' %}bg-info{% else %}bg-secondary{% endif %}">{{ u.role|title }}</span>
+                            </td>
+                            <td>
+                                {% if u.is_suspended %}
+                                    <span class="badge bg-danger">Blocked</span>
+                                {% else %}
+                                    <span class="badge bg-success">Active</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if u.is_suspended %}
+                                 <a href="{% url 'approve:unsuspend_user' u.id %}" class="btn-action btn-approve">
+                                  Unsuspend
+                                 </a>
+                                 <span class="text-danger small fw-bold">PERMANENT BLOCKED</span>
+                                {% else %}
+                                    <a href="{% url 'approve:suspend_user' u.id %}" class="btn-action btn-suspend">Suspend User</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="complaint">
+        <h2 class="mb-4 text-start" style="font-size: 24px;">User Complaints</h2>
+        <div class="complaint-grid">
+            {% for contact in contacts %}
+            <div class="complaint-card">
+                <h3>{{ contact.name }}</h3>
+                <p class="email">{{ contact.email }}</p>
+                <p>{{ contact.message }}</p>
+            </div>
+            {% empty %}
+            <p class="text-muted">No messages found</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    // Live Master Search
+    document.getElementById('masterSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let tables = document.querySelectorAll('.searchableTable tbody');
+        tables.forEach(tbody => {
+            let rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+            });
+        });
+    });
+
+    // Notification Click
+    function handleBellClick() {
+        const section = document.getElementById('complaint');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+        const badge = document.getElementById('bell-count');
+        if (badge) {
+            badge.style.display = 'none';
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

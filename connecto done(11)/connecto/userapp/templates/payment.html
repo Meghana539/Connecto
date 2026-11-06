@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Connecto</title>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary: #4f46e5; --dark: #0f172a; --error: #ef4444; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { background: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+
+        .checkout-container {
+            display: flex; width: 900px; background: white; border-radius: 30px;
+            overflow: hidden; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15); min-height: 550px;
+        }
+
+        /* LEFT SIDE: INVOICE */
+        .order-summary {
+            flex: 0.9; background: var(--dark); padding: 50px; color: white;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .order-summary h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; margin-bottom: 30px; }
+
+        .bill-item { display: flex; justify-content: space-between; margin-bottom: 18px; font-size: 15px; color: #cbd5e1; }
+        .bill-item.total { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 20px; color: white; font-weight: 800; font-size: 24px; }
+
+        .provider-info { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-top: 40px; }
+        .provider-info small { display: block; font-size: 11px; color: #818cf8; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
+
+        /* RIGHT SIDE: PAYMENT */
+        .payment-area { flex: 1.1; padding: 50px; display: flex; flex-direction: column; }
+
+        .tabs { display: flex; gap: 15px; margin-bottom: 35px; }
+        .tab {
+            flex: 1; padding: 12px; text-align: center; font-size: 14px; font-weight: 700;
+            color: #64748b; cursor: pointer; border: 2px solid #f1f5f9; border-radius: 12px; transition: 0.3s;
+        }
+        .tab.active { border-color: var(--primary); color: var(--primary); background: #f5f3ff; }
+
+        .input-group { margin-bottom: 20px; position: relative; }
+        label { display: block; font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 8px; text-transform: uppercase; }
+
+        input {
+            width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px;
+            font-size: 16px; font-weight: 600; outline: none; transition: 0.2s; background: #f8fafc;
+        }
+        input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+        input.invalid { border-color: var(--error) !important; background: #fff1f2; }
+
+        .upi-hints { display: flex; gap: 8px; margin-top: -10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .hint { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #475569; cursor: pointer; border: 1px solid #e2e8f0; }
+
+        .pay-btn {
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 18px; border-radius: 15px; font-weight: 700; font-size: 17px;
+            cursor: pointer; transition: 0.3s; margin-top: auto;
+        }
+        .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* STATUS */
+        #loaderView, #successView { text-align: center; padding: 40px 0; display: none; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #f1f5f9; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 850px) { .checkout-container { flex-direction: column; width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <div class="order-summary">
+        <div>
+            <h3>Order Summary</h3>
+            <div class="bill-item">
+                <span>Service Price</span>
+                <span>₹{{ booking.provider.charges }}</span>
+            </div>
+            <div class="bill-item">
+                <span>Connecto Fee</span>
+                <span>₹50.00</span>
+            </div>
+            <div class="bill-item total">
+                <span>Total Amount</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+
+            <div class="provider-info">
+                <small>Booking for</small>
+                <p style="font-size: 16px; font-weight: 600;">{{ booking.provider.user.get_full_name }}</p>
+                <p style="font-size: 13px; opacity: 0.6; font-weight: 400;">{{ booking.service.name }}</p>
+            </div>
+        </div>
+        <p style="font-size: 11px; opacity: 0.4;"><i class='bx bxs-lock-alt'></i> Secure 256-bit SSL Encryption</p>
+    </div>
+
+    <div class="payment-area">
+        <div id="paymentUI">
+            <div class="tabs">
+                <div class="tab active" id="tabCard" onclick="switchTab('card')"><i class='bx bxs-credit-card'></i> Card</div>
+                <div class="tab" id="tabUPI" onclick="switchTab('upi')"><i class='bx bxl-upwork'></i> UPI</div>
+            </div>
+
+            <div id="cardSection">
+                <div class="input-group">
+                    <label>Card Number</label>
+                    <input type="tel" id="cardNo" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="input-group" style="flex: 1.2;">
+                        <label>Expiry (MM/YY)</label>
+                        <input type="tel" id="expiry" placeholder="MM / YY" maxlength="7" inputmode="numeric">
+                    </div>
+                    <div class="input-group" style="flex: 0.8;">
+                        <label>CVV</label>
+                        <input type="password" id="cvv" placeholder="***" maxlength="3" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Card Holder</label>
+                    <input type="text" id="cardHolder" placeholder="Full name on card">
+                </div>
+            </div>
+
+            <div id="upiSection" style="display: none;">
+                <div class="input-group">
+                    <label>UPI ID</label>
+                    <input type="text" id="upiId" placeholder="username@bank" autocomplete="off">
+                </div>
+                <div class="upi-hints">
+                    <span class="hint" onclick="setUPI('@okaxis')">@okaxis</span>
+                    <span class="hint" onclick="setUPI('@okicici')">@okicici</span>
+                    <span class="hint" onclick="setUPI('@ybl')">@ybl</span>
+                    <span class="hint" onclick="setUPI('@paytm')">@paytm</span>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin-bottom: 20px;">Verification: We will send a request to your app.</p>
+            </div>
+
+            <button class="pay-btn" id="payBtn" onclick="processPayment()" disabled style="opacity: 0.5;">Pay ₹{{ total_price }}</button>
+        </div>
+
+        <div id="loaderView">
+            <div class="spinner"></div>
+            <h3>Authorizing Payment...</h3>
+        </div>
+        <div id="successView">
+            <i class='bx bxs-check-circle' style="font-size: 80px; color: var(--success); margin-bottom: 20px; display: block;"></i>
+            <h2>Payment Successful!</h2>
+            <p style="color: #64748b; margin-top: 10px;">Your service is now booked.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentMethod = 'card';
+    const payBtn = document.getElementById('payBtn');
+    const expiryInput = document.getElementById('expiry');
+    const upiInput = document.getElementById('upiId');
+
+    function switchTab(method) {
+        currentMethod = method;
+        document.getElementById('cardSection').style.display = method === 'card' ? 'block' : 'none';
+        document.getElementById('upiSection').style.display = method === 'upi' ? 'block' : 'none';
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(method === 'card' ? 'tabCard' : 'tabUPI').classList.add('active');
+        validateAll();
+    }
+
+    // --- UPI Validation Logic ---
+    upiInput.addEventListener('input', validateAll);
+    function setUPI(ext) {
+        let val = upiInput.value.split('@')[0];
+        if(val.length > 0) { upiInput.value = val + ext; validateAll(); }
+    }
+
+    // --- MM / YY Smooth Formatting ---
+    expiryInput.addEventListener('input', (e) => {
+        let cursor = e.target.selectionStart;
+        let oldLen = e.target.value.length;
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 2) e.target.value = v.substring(0, 2) + " / " + v.substring(2, 4);
+        else e.target.value = v;
+
+        let newLen = e.target.value.length;
+        cursor = cursor + (newLen - oldLen);
+        e.target.setSelectionRange(cursor, cursor);
+
+        if (e.target.value.length === 7) {
+            const m = parseInt(v.substring(0, 2));
+            const y = parseInt("20" + v.substring(2, 4));
+            const isPast = (y < 2026) || (y === 2026 && m < 4) || m > 12;
+            e.target.classList.toggle('invalid', isPast);
+        } else { e.target.classList.remove('invalid'); }
+        validateAll();
+    });
+
+    expiryInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && expiryInput.value.length === 5) {
+            e.preventDefault(); expiryInput.value = expiryInput.value.substring(0, 2); validateAll();
+        }
+    });
+
+    // --- Master Validation ---
+    function validateAll() {
+        if (currentMethod === 'upi') {
+            const upiVal = upiInput.value.trim();
+            // Regex: user@bank format
+            const upiPattern = /^[a-zA-Z0-9.\-_]{3,}@[a-zA-Z]{2,10}$/;
+            const isValid = upiPattern.test(upiVal);
+
+            // Show red border only if user has typed a lot but its still wrong
+            upiInput.classList.toggle('invalid', upiVal.length > 10 && !isValid);
+            payBtn.disabled = !isValid;
+        } else {
+            const card = document.getElementById('cardNo').value.replace(/\s/g, '');
+            const expiry = expiryInput.value;
+            const cvv = document.getElementById('cvv').value;
+            const isValid = card.length === 16 && expiry.length === 7 && cvv.length === 3 && !expiryInput.classList.contains('invalid');
+            payBtn.disabled = !isValid;
+        }
+        payBtn.style.opacity = payBtn.disabled ? "0.5" : "1";
+    }
+
+    document.getElementById('cardNo').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '');
+        e.target.value = v.match(/.{1,4}/g)?.join(' ') || '';
+        validateAll();
+    });
+    document.getElementById('cvv').addEventListener('input', validateAll);
+
+    function processPayment() {
+        document.getElementById('paymentUI').style.display = "none";
+        document.getElementById('loaderView').style.display = "block";
+        setTimeout(() => {
+            document.getElementById('loaderView').style.display = "none";
+            document.getElementById('successView').style.display = "block";
+            setTimeout(() => { window.location.href = "/payment-success/{{ booking.id }}/"; }, 2000);
+        }, 2500);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Connecto</title>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary: #4f46e5; --dark: #1e293b; --error: #ef4444; --success: #10b981; --gray: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+
+        .checkout-card {
+            display: flex; width: 950px; background: white; border-radius: 28px;
+            overflow: hidden; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15); height: 600px;
+        }
+
+        .branding { flex: 1.1; background: var(--dark); padding: 50px; color: white; display: flex; flex-direction: column; justify-content: center; }
+        .logo { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: #818cf8; font-size: 32px; }
+        .feature-box { margin-bottom: 30px; }
+        .feature-box h3 { font-size: 18px; margin-bottom: 8px; color: #f1f5f9; }
+        .feature-box p { font-size: 14px; color: #94a3b8; line-height: 1.6; }
+
+        .payment-area { flex: 1; padding: 50px; display: flex; flex-direction: column; }
+        .summary { margin-bottom: 35px; }
+        .summary p { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+        .summary h2 { font-size: 32px; font-weight: 800; color: var(--dark); }
+
+        .back-nav { display: none; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 25px; align-items: center; gap: 6px; }
+
+        .method-btn {
+            border: 2px solid #f1f5f9; padding: 20px; border-radius: 16px;
+            display: flex; align-items: center; gap: 18px; cursor: pointer;
+            margin-bottom: 15px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .method-btn:hover { border-color: var(--primary); background: #f5f7ff; transform: scale(1.02); }
+        .method-btn i { font-size: 26px; color: #475569; }
+        .method-btn b { font-size: 15px; color: var(--dark); }
+
+        .view { display: none; }
+        .input-wrap { margin-bottom: 20px; position: relative; }
+        label { display: block; font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 8px; text-transform: uppercase; }
+        input {
+            width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px;
+            font-size: 16px; font-weight: 500; outline: none; transition: 0.2s; background: #f8fafc;
+        }
+        input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+        input.invalid { border-color: var(--error) !important; background: #fff1f2; }
+
+        .error-msg { color: var(--error); font-size: 11px; font-weight: 700; margin-top: 5px; display: none; }
+
+        .upi-tags { display: flex; gap: 8px; margin-top: -10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tag { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer; border: 1px solid #e2e8f0; }
+        .tag:hover { background: #e2e8f0; border-color: var(--primary); }
+
+        .pay-btn {
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 18px; border-radius: 14px; font-weight: 700; cursor: pointer;
+            font-size: 17px; margin-top: 15px; transition: 0.3s;
+        }
+        .pay-btn:hover:not(:disabled) { background: #4338ca; box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.4); }
+        .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .status-container { text-align: center; padding: 60px 0; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #f1f5f9; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 900px) { .checkout-card { flex-direction: column; width: 100%; height: auto; } }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-card">
+        <div class="branding">
+            <div class="logo"><i class='bx bxs-bolt-circle'></i> Connecto</div>
+            <div>
+                <div class="feature-box"><h3>Premium Badge</h3><p>Verified "Recommended" badge on your profile.</p></div>
+                <div class="feature-box"><h3>Priority Search</h3><p>Appear at the top of search results.</p></div>
+                <div class="feature-box"><h3>Secure Payment</h3><p>Your transaction is encrypted.</p></div>
+            </div>
+            <p style="font-size: 12px; opacity: 0.4; margin-top: 50px;">© 2026 Connecto Services Marketplace</p>
+        </div>
+
+        <div class="payment-area" id="mainContainer">
+            <div class="summary" id="headerSummary">
+                <p>Order Total</p>
+                <h2>₹ 500.00</h2>
+            </div>
+
+            <div class="back-nav" id="backBtn" onclick="resetViews()">
+                <i class='bx bx-chevron-left'></i> Back to Methods
+            </div>
+
+            <div id="selectionView">
+                <label>Select Method</label>
+                <div class="method-btn" onclick="openView('cardView')"><i class='bx bxs-credit-card'></i><b>Credit / Debit Card</b></div>
+                <div class="method-btn" onclick="openView('upiView')"><i class='bx bxl-upwork'></i><b>UPI (PhonePe, GPay, Paytm)</b></div>
+            </div>
+
+            <div id="cardView" class="view">
+                <div class="input-wrap">
+                    <label>Card Number</label>
+                    <input type="tel" id="card_no" placeholder="0000 0000 0000 0000" inputmode="numeric">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="input-wrap" style="flex: 1;">
+                        <label>Expiry (MM/YY)</label>
+                        <input type="tel" id="expiry" placeholder="MM / YY" maxlength="7" inputmode="numeric">
+                        <span id="expiryError" class="error-msg"></span>
+                    </div>
+                    <div class="input-wrap" style="flex: 0.8;">
+                        <label>CVV</label>
+                        <input type="tel" id="cvv" placeholder="***" maxlength="3" inputmode="numeric">
+                    </div>
+                </div>
+                <button class="pay-btn" id="cardPayBtn" onclick="startFinalProcess()" disabled style="opacity: 0.5;">Pay ₹ 500.00</button>
+            </div>
+
+            <div id="upiView" class="view">
+                <div class="input-wrap">
+                    <label>Enter UPI ID</label>
+                    <input type="text" id="upi_id" placeholder="username@bank" autocomplete="off">
+                    <span id="upiError" class="error-msg">Enter a valid UPI ID (e.g. name@bank)</span>
+                </div>
+                <div class="upi-tags">
+                    <span class="tag" onclick="appendUPI('@okaxis')">@okaxis</span>
+                    <span class="tag" onclick="appendUPI('@okicici')">@okicici</span>
+                    <span class="tag" onclick="appendUPI('@ybl')">@ybl</span>
+                </div>
+                <button class="pay-btn" id="upiPayBtn" onclick="startFinalProcess()" disabled style="opacity: 0.5;">Verify & Pay</button>
+            </div>
+
+            <div id="processingView" class="view status-container">
+                <div class="spinner"></div><h3>Processing...</h3>
+            </div>
+
+            <div id="successView" class="view status-container">
+                <i class='bx bxs-check-circle' style="font-size: 80px; color: var(--success);"></i>
+                <h2>Success!</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cardPayBtn = document.getElementById('cardPayBtn');
+        const upiPayBtn = document.getElementById('upiPayBtn');
+        const upiInput = document.getElementById('upi_id');
+
+        function openView(id) {
+            document.getElementById('selectionView').style.display = 'none';
+            document.getElementById('backBtn').style.display = 'flex';
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function resetViews() {
+            document.getElementById('selectionView').style.display = 'block';
+            document.getElementById('backBtn').style.display = 'none';
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+        }
+
+        // Card Formatting
+        document.getElementById('card_no').addEventListener('input', (e) => {
+            let cursor = e.target.selectionStart;
+            let v = e.target.value.replace(/\D/g, '');
+            let f = v.match(/.{1,4}/g)?.join(' ') || '';
+            e.target.value = f.substring(0, 19);
+            if (e.target.value.length > cursor && e.target.value[cursor-1] === ' ') cursor++;
+            e.target.setSelectionRange(cursor, cursor);
+            checkCardValidity();
+        });
+
+        // Expiry Formatting
+        document.getElementById('expiry').addEventListener('input', (e) => {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 2) {
+                e.target.value = v.substring(0, 2) + " / " + v.substring(2, 4);
+            } else { e.target.value = v; }
+
+            if (e.target.value.length === 7) {
+                const m = parseInt(v.substring(0, 2));
+                const y = parseInt("20" + v.substring(2, 4));
+                const isPast = (y < 2026) || (y === 2026 && m < 4) || m > 12;
+
+                if (isPast) {
+                    e.target.classList.add('invalid');
+                    document.getElementById('expiryError').innerText = m > 12 ? "Invalid Month!" : "Expired!";
+                    document.getElementById('expiryError').style.display = 'block';
+                } else {
+                    e.target.classList.remove('invalid');
+                    document.getElementById('expiryError').style.display = 'none';
+                }
+            }
+            checkCardValidity();
+        });
+
+        document.getElementById('cvv').addEventListener('input', checkCardValidity);
+
+        function checkCardValidity() {
+            const card = document.getElementById('card_no').value.replace(/\s/g, '');
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const hasError = document.getElementById('expiry').classList.contains('invalid');
+            const isValid = card.length === 16 && expiry.length === 7 && cvv.length === 3 && !hasError;
+            cardPayBtn.disabled = !isValid;
+            cardPayBtn.style.opacity = isValid ? "1" : "0.5";
+        }
+
+        upiInput.addEventListener('input', validateUPI);
+        function validateUPI() {
+            const val = upiInput.value.trim();
+            const pattern = /^[a-zA-Z0-9.\-_]{3,}@[a-zA-Z]{2,10}$/;
+            const isValid = pattern.test(val);
+            upiPayBtn.disabled = !isValid;
+            upiPayBtn.style.opacity = isValid ? "1" : "0.5";
+            upiInput.classList.toggle('invalid', val.length > 8 && !val.includes('@'));
+        }
+
+        function appendUPI(ext) {
+            let current = upiInput.value.split('@')[0];
+            if (current.length > 0) { upiInput.value = current + ext; validateUPI(); }
+        }
+
+        function startFinalProcess() {
+            document.getElementById('headerSummary').style.display = 'none';
+            document.getElementById('backBtn').style.display = 'none';
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById('processingView').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('processingView').style.display = 'none';
+                document.getElementById('successView').style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = "{% url 'service:payment_verify' %}?payment_id=PAY-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                }, 2000);
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

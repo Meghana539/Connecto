@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}My Saved Experts | Connecto{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #7c4dff;
+        --primary-light: #f0ebff;
+        --bg-body: #f4f7fe;
+        --text-main: #2b3674;
+        --text-secondary: #a3aed0;
+    }
+
+    body { background-color: var(--bg-body); }
+
+    .header-section {
+        background: white;
+        padding: 40px 0 60px 0;
+        text-align: center;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+        margin-bottom: 50px;
+    }
+
+    .header-section h1 { font-weight: 800; font-size: 36px; color: var(--text-main); }
+    .header-section h1 span { color: var(--primary); }
+
+    .results-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        max-width: 1250px;
+        margin: 0 auto 60px auto;
+        padding: 0 25px;
+    }
+
+    .provider-card {
+        background: white;
+        border-radius: 20px; /* Thoda kam round kiya hai clean look ke liye */
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(163, 174, 208, 0.1);
+        transition: all 0.4s ease;
+        position: relative;
+        border: 1px solid #f0f3ff;
+    }
+
+    .provider-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(124, 77, 255, 0.12);
+    }
+
+    /* Recommendation Tag Style */
+    .recommended-tag {
+        position: absolute; top: -12px; left: 20px;
+        background: linear-gradient(135deg, #7c4dff, #00d2ff);
+        color: white; padding: 5px 15px; border-radius: 10px;
+        font-size: 10px; font-weight: 800; text-transform: uppercase;
+        z-index: 10; box-shadow: 0 5px 15px rgba(124, 77, 255, 0.2);
+    }
+
+    .provider-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+    .provider-img { width: 60px; height: 60px; object-fit: cover; border-radius: 15px; border: 2px solid #f8f9ff; }
+
+    .provider-info h3 { margin: 0; color: var(--text-main); font-size: 18px; font-weight: 800; }
+    .service-tag { margin: 0; color: var(--primary); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+
+    .view-btn {
+        display: block; width: 100%; padding: 12px; background: var(--primary); color: white;
+        text-decoration: none; border-radius: 12px; font-weight: 700; text-align: center;
+        transition: 0.3s; border: none; font-size: 14px;
+    }
+    .view-btn:hover { background: #6a0dad; color: white; }
+
+    .remove-btn {
+        display: block; width: 100%; padding: 10px; background: #fff1f1; color: #ff4d4d;
+        text-decoration: none; border-radius: 12px; font-weight: 700; text-align: center;
+        transition: 0.3s; border: 1px solid #ffebeb; font-size: 13px; margin-top: 10px;
+    }
+    .remove-btn:hover { background: #ff4d4d; color: white; }
+
+    .empty-state { text-align: center; padding: 80px 0; grid-column: 1 / -1; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header-section">
+    <div class="container">
+        <h1>My <span>Saved Experts</span> ❤️</h1>
+        <p class="text-muted">Your All Favorite Service Providers ...</p>
+    </div>
+</div>
+
+<div class="results-container">
+    {% for item in experts %}
+    <div class="provider-card">
+
+        {% if item.provider.is_recommended %}
+        <div class="recommended-tag">
+            <i class='bx bxs-badge-check'></i> Recommended By Connecto
+        </div>
+        {% endif %}
+
+        <div class="provider-header">
+            <img src="{{ item.provider.profile_photo.url }}" class="provider-img" alt="Profile">
+            <div class="provider-info">
+                <h3>{{ item.provider.user.get_full_name }}</h3>
+                <p class="service-tag">{{ item.provider.service }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mb-2">
+            <a href="{% url 'provider_details' item.provider.id %}" class="view-btn" style="background: var(--primary-light); color: var(--primary);">Profile</a>
+            <a href="{% url 'create_booking' item.provider.id %}" class="view-btn">Book Now</a>
+        </div>
+
+        <a href="{% url 'toggle_save' item.provider.id %}" class="remove-btn">
+            <i class='bx bx-trash-alt me-1'></i> Remove from Wishlist
+        </a>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <i class='bx bx-heart-circle' style="font-size: 80px; color: var(--text-secondary); opacity: 0.4;"></i>
+        <h3 class="mt-3 fw-bold" style="color: var(--text-main);">Wishlist is Empty </h3>
+        <p class="text-secondary">Explore And Save Your Favorite experts!</p>
+        <a href="{% url 'userapp:search_providers' %}" class="btn btn-primary mt-3" style="border-radius: 15px; padding: 12px 30px; background: var(--primary); border: none;">Explore Providers</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

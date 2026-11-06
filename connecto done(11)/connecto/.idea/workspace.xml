@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="80438d9c-db0b-4329-b1a9-fdb840f0ae8b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Cannecto_Project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/Connecto.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Connecto/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/templates/admin_dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/templates/approve/approve_dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/approve/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_12OWeqj.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_2DSOWPe.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_3kFpbBf.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_4F5nCSV.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_5ouZOAz.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_6wddDDv.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_Af8Okzu.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_AwDCk1y.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_DH0Xy7q.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_HnqZINE.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_J1F195q.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_JhkaDLB.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_Qxvc4LN.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_SuQv2R4.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_ZJKeMsW.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_ZXAepZC.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_bzr4iYu.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_dXyYlIW.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_ljUfZCL.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_m3ZlbSR.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_nNIbUV0.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_qY59PtO.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_tBguk19.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_tlhl2eD.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_vSbR6j1.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_wCgX1Jt.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_y1WFSPe.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/10_y4MQbQD.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/12_jan.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/12_jan_3eAaQiE.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/12_jan_9e59Eua.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/12_jan_PzotR4q.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/12_jan_bkuIru7.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/7-layers-of-OSI-Model.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1_BZgkACJ.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1_Nh7MA4I.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1_VdFki5c.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1_jwB8mXF.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/AI_notes_1_kV8XfAR.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Amruta_Mahalle_Icard.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Amruta_Mahalle_Icard.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Amruta_Mahalle_Icard_VKRhmmQ.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Analysis_of_Data_Mining_Techniques_and_i.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/CS_notes.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/DBMS_Practical_Leaflet_2025_.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/DataMiningMethodsandObstaclesAComprehensiveAnalysis.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Expence_Tracker.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/SELFDECK.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/SELFDECK_OEoPqTG.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Screenshot_2025-06-12_150217.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/Screenshot_2025-06-13_201340.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/amu.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/as.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/as3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/as3_BDyUnf4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/as3_vJLKRlG.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/bus_tickit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/bus_tickit_pxdR9Pr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/progress_reports_SELFDECK.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/ids/sapm_8_final.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/12_jan.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/Amruta_Mahalle_Icard.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/Analysis_of_Data_Mining_Techniques_and_i.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/DataMiningMethodsandObstaclesAComprehensiveAnalysis.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/DataMiningandMachineLearningApplications-2022-Raja-FrontMatter.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/amu.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/amu_Mko2nAg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/payments/applelogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/24953.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/ATTI19.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/Laptop-Desktop-Wallpaper.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/My_family....jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/Screenshot_2025-06-13_192119.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/WhatsApp_Image_2024-06-11_at_8.34.31_PM.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/WhatsApp_Image_2024-06-11_at_8_qGJBux0.34.31_PM.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/applelogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/applelogo_SGCCu6V.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/applelogo_j7pmftp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/applelogo_khkmajj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/applelogo_tHdYyil.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_7z9UaJl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_ISbY4CC.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_IVdX5mW.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_cJRfLF1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_iTEjkP2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/as_r04bKCP.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/cat.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/cat_0NQ1zDk.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/cat_rOzTNcB.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/cat_xOWP2zH.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/desktop-wallpaper-sad-aesthetic-anime-girl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/desktop-wallpaper-sad-aesthetic-anime-girl_ReXCmgJ.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/images.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/skincare.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/swan.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/swan_LYBJbtd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/swan_dPx2abH.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/profiles/wallpapersden.com_jujutsu-kaisen-blue-eyes_2184x1224.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/migrations/0002_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/migrations/0003_alter_serviceproviders_charges.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/static/service/images/QR.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/pay_recommendation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/all_bookings.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/edit_provider.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/rejected.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/templates/service/service_dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/decorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0002_booking_amount_paid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0003_alter_booking_phone_alter_user_phone.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0004_booking_admin_commission_booking_provider_earning.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0005_contact.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0006_booking_charges.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0007_remove_booking_charges_booking_service_charge.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0008_booking_completed_at_alter_booking_service_charge.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/0009_savedprovider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/carpainter.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/cleaning.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/connecto1.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/money.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/need services.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/static/images/plumber.jpg.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/about.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/add_review.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/contact.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/create_booking.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/my_bookings.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/navbar.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/payment.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/provider_details.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/saved_experts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/search.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/templates/user_dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userapp/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/service/views.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3BXQc8RYWxAU4og44hadxg6miL7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Komal/Downloads/connectofinal09/connectoproject9/connecto/userapp/static/images",
+    "settings.editor.selected.configurable": "vcs.Git"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Komal\Downloads\connectofinal09\connectoproject9\connecto\userapp\static\images" />
+      <recent name="C:\Users\HP\Downloads\connectoservice\connectoupdated\connecto\service\static\service\images" />
+      <recent name="C:\Users\HP\Downloads\connectoservice\connectoupdated\connecto\userapp\static\images" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="80438d9c-db0b-4329-b1a9-fdb840f0ae8b" name="Changes" comment="" />
+      <created>1774633014128</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774633014128</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

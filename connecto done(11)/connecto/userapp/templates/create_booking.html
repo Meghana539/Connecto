@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block title %}Connecto | Book Service{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* Fixed Background for the whole page */
+    body {
+        background: linear-gradient(to bottom, #a8c6c9, #9f98a9, #b8a9a3) !important;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    /* Is container ko screen ke exact center mein laane ke liye */
+    .booking-page-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh; /* Navbar ke baad bachi hui space mein center karega */
+        padding: 40px 0;
+    }
+
+    .main-box {
+        width: 800px;
+        display: flex;
+        border-radius: 25px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+        margin: auto; /* Extra safety for centering */
+    }
+
+    /* Baki saara design waisa hi hai jaisa aapne diya tha */
+    .left {
+        width: 38%;
+        padding: 40px 30px;
+        color: white;
+        background: rgba(0,0,0,0.25);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .left h2 { font-size: 26px; font-weight: 800; margin-bottom: 25px; text-transform: capitalize; }
+
+    .info-list { list-style: none; padding: 0; }
+    .info-item {
+        margin-bottom: 15px;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    .right {
+        width: 62%;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 40px;
+    }
+
+    .right h2 { text-align: center; font-weight: 800; color: #1e293b; margin-bottom: 25px; font-size: 24px; }
+
+    .form-group { margin-bottom: 15px; }
+    .form-label { font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 5px; display: block; text-transform: uppercase; }
+
+    .form-control, form input, form textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        font-size: 14px;
+    }
+
+    .time-box {
+        background: #f1f5f9;
+        padding: 18px;
+        border-radius: 18px;
+        border: 2px dashed #6366f1;
+        margin-top: 15px;
+    }
+
+    .btn-book {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        width: 100%;
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    .error { color: #e11d48; font-size: 11px; font-weight: 600; margin-top: 4px; display: block; }
+
+    @media (max-width: 820px) {
+        .main-box { width: 95%; flex-direction: column; margin-top: 20px; }
+        .left, .right { width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="booking-page-root">
+    <div class="main-box">
+        <div class="left">
+            <h2>{{ provider.service }}</h2>
+            <div class="info-list">
+                <div class="info-item"><b>Expert</b> <span>{{ provider.user.first_name }}</span></div>
+                <div class="info-item"><b>Location</b> <span>{{ provider.city }}</span></div>
+                <div class="info-item"><b>Exp</b> <span>{{ provider.experience }} Years</span></div>
+                <div class="info-item"><b>Cost</b> <span>₹{{ provider.charges }}</span></div>
+                <div class="info-item"><b>Available</b> <span>{{ provider.working_hours }}</span></div>
+            </div>
+            <div class="mt-4">
+                <a href="#" onclick="history.back(); return false;" style="color: white; text-decoration: none; font-size: 14px; font-weight: bold;">&larr; Back</a>
+            </div>
+        </div>
+
+        <div class="right">
+            <h2>Book Service</h2>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}<small class="error">{{ form.name.errors.0 }}</small>{% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}<small class="error">{{ form.phone.errors.0 }}</small>{% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Service Address</label>
+                    {{ form.address }}
+                    {% if form.address.errors %}<small class="error">{{ form.address.errors.0 }}</small>{% endif %}
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex: 1;">
+                        <label class="form-label">Booking Date</label>
+                        {{ form.date }}
+                        {% if form.date.errors %}<small class="error">{{ form.date.errors.0 }}</small>{% endif %}
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="form-label">Service Type</label>
+                        <input type="text" value="{{ provider.service }}" readonly style="background: #f1f5f9; color: #64748b; font-weight: 700;">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label class="form-label">Special Notes</label>
+                    {{ form.notes }}
+                </div>
+
+                <div class="time-box">
+                    <label>⏰ Select Time Slot</label>
+                    {{ form.slot }}
+                    <small style="color: #64748b; display: block; margin-top: 6px; font-size: 11px; font-weight: 500;">
+                        Working: {{ provider.working_hours }}
+                    </small>
+                    {% if form.slot.errors %}<small class="error">{{ form.slot.errors.0 }}</small>{% endif %}
+                </div>
+
+                <button type="submit" class="btn-book">Confirm Booking 🚀</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Date restriction and SweetAlert logic as before
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.querySelector('input[type="date"]');
+        if(dateInput) {
+            dateInput.setAttribute('min', today);
+            if(!dateInput.value) dateInput.value = today;
+        }
+        {% if messages %}
+            {% for message in messages %}
+                {% if message == "booking_success" %}
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success 🎉',
+                        text: 'Your booking is successful',
+                        confirmButtonColor: '#6366f1'
+                    });
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+{% endblock %}

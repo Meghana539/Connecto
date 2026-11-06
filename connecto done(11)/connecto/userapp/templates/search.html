@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results | Connecto{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #7c4dff;
+        --primary-light: #f0ebff;
+        --bg-body: #f4f7fe;
+        --text-main: #2b3674;
+        --text-secondary: #a3aed0;
+    }
+
+    /* GAP ADJUSTMENT: Navbar aur Content ke beech ka gap yahan se fix hua */
+    .header-section {
+        background: white;
+        padding: 30px 0 80px 0; /* Padding kam ki gayi taaki navbar ke sath chipka na lage */
+        text-align: center;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+    }
+
+    .header-section h1 { font-weight: 800; font-size: 40px; margin: 0; }
+    .header-section h1 span { color: var(--primary); }
+
+    .filter-wrapper {
+        margin-top: -55px;
+        position: relative;
+        z-index: 100;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
+    }
+
+    .filter-card {
+        background: white;
+        padding: 30px;
+        border-radius: 35px;
+        box-shadow: 0 20px 40px rgba(163, 174, 208, 0.2);
+        border: 1px solid rgba(124, 77, 255, 0.1);
+    }
+
+    .form-label {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+        letter-spacing: 0.5px;
+        margin-left: 5px;
+    }
+
+    .form-select {
+        border: 2px solid #f1f4f9;
+        background: #f4f7fe;
+        border-radius: 18px;
+        padding: 12px 15px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-main);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .form-select:focus {
+        border-color: var(--primary);
+        background: white;
+        box-shadow: 0 0 0 4px var(--primary-light);
+        outline: none;
+    }
+
+    .btn-apply {
+        background: var(--primary);
+        color: white;
+        border-radius: 18px;
+        height: 52px;
+        font-weight: 700;
+        border: none;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(124, 77, 255, 0.2);
+        width: 100%;
+    }
+
+    .btn-apply:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(124, 77, 255, 0.3); color: white; }
+
+    .results-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        max-width: 1250px;
+        margin: 60px auto;
+        padding: 0 25px;
+    }
+
+    .provider-card {
+        background: white;
+        border-radius: 32px;
+        padding: 28px;
+        box-shadow: 0 10px 30px rgba(163, 174, 208, 0.1);
+        transition: all 0.4s ease;
+        position: relative;
+        border: 1px solid #f0f3ff;
+    }
+
+    .provider-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px rgba(124, 77, 255, 0.12);
+        border-color: var(--primary-light);
+    }
+
+    .rating-badge {
+        position: absolute; top: 25px; right: 25px;
+        background: #fff; padding: 6px 14px; border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        display: flex; align-items: center; gap: 5px; border: 1px solid #f1f5f9;
+    }
+
+    .star-icon { color: #ffb547; font-size: 16px; }
+    .rating-text { font-size: 14px; font-weight: 800; color: var(--text-main); }
+
+    .provider-header { display: flex; align-items: center; gap: 18px; margin-bottom: 25px; }
+    .provider-img { width: 65px; height: 65px; object-fit: cover; border-radius: 20px; border: 3px solid #f8f9ff; }
+
+    .provider-info h3 { margin: 0; color: var(--text-main); font-size: 19px; font-weight: 800; }
+    .service-tag { margin: 0; color: var(--primary); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .info-list { background: #f8faff; border-radius: 22px; padding: 20px; margin-bottom: 25px; }
+    .info-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; color: var(--text-main); font-size: 13px; font-weight: 600; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-item i { color: var(--primary); font-size: 18px; }
+
+    .view-btn {
+        display: block; width: 100%; padding: 15px; background: var(--primary); color: white;
+        text-decoration: none; border-radius: 18px; font-weight: 700; text-align: center;
+        transition: 0.3s; border: none;
+    }
+    .view-btn:hover { background: #6a0dad; box-shadow: 0 10px 20px rgba(124, 77, 255, 0.2); color: white; }
+
+    .recommended-tag {
+        position: absolute; top: -14px; left: 25px;
+        background: linear-gradient(135deg, #7c4dff, #00d2ff);
+        color: white; padding: 6px 18px; border-radius: 14px;
+        font-size: 10px; font-weight: 800; text-transform: uppercase;
+        z-index: 10; box-shadow: 0 8px 20px rgba(124, 77, 255, 0.25);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header-section">
+    <div class="container text-center">
+        <h1>Find <span>Service Partners</span></h1>
+    </div>
+</div>
+
+<div class="container filter-wrapper">
+    <form method="GET" action="{% url 'userapp:search_providers' %}" class="filter-card">
+        <div class="row g-4 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Location</label>
+                <select name="city" class="form-select">
+                    <option value="">All Cities</option>
+                    {% for city in all_cities %}
+                    <option value="{{ city }}" {% if city == selected_city %}selected{% endif %}>{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Service Type</label>
+                <select name="service_type" class="form-select">
+                    <option value="">All Services</option>
+                    {% for service in all_services %}
+                    <option value="{{ service }}" {% if service == selected_service %}selected{% endif %}>{{ service }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Sort Results</label>
+                <select name="sort" class="form-select">
+                    <option value="">All Results</option>
+                    <option value="recommended" {% if selected_sort == 'recommended' %}selected{% endif %}>Only Recommended</option>
+                    <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="exp" {% if selected_sort == 'exp' %}selected{% endif %}>Most Experienced</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-apply">
+                    <i class='bx bx-slider-alt me-2'></i> APPLY FILTERS
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="results-container">
+    {% for p in providers %}
+    <div class="provider-card" {% if p.is_recommended %} style="border: 1.5px solid var(--primary-light);" {% endif %}>
+
+        {% if p.is_recommended %}
+        <div class="recommended-tag">
+            <i class='bx bxs-badge-check'></i> Recommended By Connecto
+        </div>
+        {% endif %}
+
+        {% if p.avg_rating %}
+            <div class="rating-badge">
+                <i class='bx bxs-star star-icon'></i>
+                <span class="rating-text">{{ p.avg_rating|floatformat:1 }}</span>
+            </div>
+        {% else %}
+            <div class="rating-badge"><span class="rating-text" style="font-size: 11px; color: var(--text-secondary);">New Profile</span></div>
+        {% endif %}
+
+        <div class="provider-header">
+            <img src="{{ p.profile_photo.url }}" class="provider-img" alt="Profile">
+            <div class="provider-info">
+                <h3>{{ p.user.get_full_name }}</h3>
+                <p class="service-tag">{{ p.service }}</p>
+            </div>
+        </div>
+
+        <div class="info-list">
+            <div class="info-item">
+                <i class='bx bxs-award'></i>
+                <span><strong>{{ p.experience }} Years</strong> Experience</span>
+            </div>
+            <div class="info-item">
+                <i class='bx bxs-map-pin'></i>
+                <span>{{ p.city }}</span>
+            </div>
+            <div class="info-item">
+                <i class='bx bxs-bolt-circle'></i>
+                <span>Starts at <strong>₹{{ p.charges }}</strong></span>
+            </div>
+        </div>
+
+        <a href="{% url 'userapp:provider_details' p.id %}" class="view-btn">View Full Profile</a>
+    </div>
+    {% empty %}
+        <div class="text-center w-100 mt-5 py-5">
+            <i class='bx bx-search-alt' style="font-size: 60px; color: var(--text-secondary); opacity: 0.5;"></i>
+            <p class="mt-3 fw-bold" style="color: var(--text-secondary); font-size: 18px;">No partners found for your search.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
